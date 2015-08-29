@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from treelib import Tree
+from treelib import Tree, Node
 from treelib.plugins import *
 import os
 import unittest
+import json
 
 class DotExportCase(unittest.TestCase):
     """Test class for the export to dot format function"""
@@ -78,6 +79,18 @@ digraph tree {
 
     def tearDown(self):
         self.tree = None
+
+# simple test for unjsonify function
+def testUnjsonify():   
+    tree = Tree()
+    tree.create_node('home', 'home')
+    tree.create_node('phone', 'phone', parent='home')
+    tree.create_node('laptop', 'laptop', parent='home')
+    tree.create_node('screen', 'screen', parent='laptop')
+    tree.create_node(19, 19, parent='home')
+    tree.create_node((1,2), (1,2), parent='screen')
+    j = tree.to_json()
+    unjsonify(j).show() 
 
 if __name__ == "__main__":
     unittest.main()
